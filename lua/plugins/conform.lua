@@ -38,7 +38,6 @@ return { -- Autoformat
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      vue = { 'prettierd', 'prettier', stop_after_first = true },
       html = { 'prettierd', 'prettier', stop_after_first = true },
       css = { 'prettierd', 'prettier', stop_after_first = true },
       scss = { 'prettierd', 'prettier', stop_after_first = true },
@@ -46,8 +45,7 @@ return { -- Autoformat
       yaml = { 'prettierd', 'prettier', stop_after_first = true },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
       rust = { 'rustfmt' },
-      go = { 'gofmt', 'goimports', 'gofumpt' },
-      sh = { 'shfmt' },
+      go = { 'gofmt' },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       angular = { 'prettierd', 'prettier', stop_after_first = true },
       vue = { 'prettierd', 'prettier', stop_after_first = true },

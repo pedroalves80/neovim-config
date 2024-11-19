@@ -16,7 +16,7 @@ vim.keymap.set('n', 'x', '"_x')
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -94,9 +94,6 @@ vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { silent = true })
 -- Open terminal
 vim.keymap.set('n', '<leader>tt', ':terminal<CR>')
 
--- Go back to normal mode inside terminal
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
-
 -- Window Navigation
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
@@ -118,7 +115,9 @@ vim.keymap.set('n', '<leader>ft', function()
     return
   end
 
-  local ok, msg = pcall(vim.cmd, 'set filetype=' .. filetype)
+  local ok, msg = pcall(function()
+    return vim.cmd('set filetype=' .. filetype)
+  end)
 
   if not ok then
     print('An error occurred: ' .. msg)
