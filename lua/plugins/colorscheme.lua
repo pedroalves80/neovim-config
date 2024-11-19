@@ -8,7 +8,7 @@ return {
       style = 'warm',
 
       lualine = {
-        transparent = true, -- lualine center bar transparency
+        transparent = true,
       },
     }
     vim.cmd [[colorscheme onedark]]
