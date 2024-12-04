@@ -42,7 +42,7 @@ return {
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       angular = { 'prettierd', 'prettier', stop_after_first = true },
       vue = { 'prettierd', 'prettier', stop_after_first = true },
-      java = { 'google-java-format' },
+      java = { 'google-java-format', 'clang-format' },
       sql = { 'sql-formatter' },
     },
   },

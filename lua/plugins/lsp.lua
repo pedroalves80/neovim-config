@@ -30,6 +30,17 @@ return {
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+        local lspconfig = require 'lspconfig'
+        local is_in_deno_repo = lspconfig.util.root_pattern('deno.json', 'import_map.json', 'deno.jsonc')(vim.fn.getcwd())
+
+        if is_in_deno_repo and client then
+          if client.name == 'ts_ls' then
+            client.stop()
+            return
+          end
+        end
+
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -94,8 +105,11 @@ return {
           'javascript',
           'typescript',
           'vue',
+          'javascriptreact',
+          'typescriptreact',
         },
       },
+      denols = {},
       cssls = {
         init_options = {
           provideFormatter = true,
@@ -126,6 +140,7 @@ return {
       },
       prettier = {},
       prettierd = {},
+      tailwindcss = {},
     }
 
     require('mason').setup()
@@ -136,6 +151,7 @@ return {
       'google-java-format', -- Used to format Java code
       'rustfmt', -- Used to format Rust code
       'sql-formatter', -- Used to format SQL code
+      'clang-format', -- Used to format Java code
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

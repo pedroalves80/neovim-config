@@ -9,7 +9,7 @@ return {
         offsets = {
           {
             filetype = 'NvimTree',
-            text = '--- FILE EXPLORER ---',
+            text = '',
             text_align = 'center',
           },
         },
