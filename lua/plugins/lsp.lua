@@ -33,9 +33,17 @@ return {
 
         local lspconfig = require 'lspconfig'
         local is_in_deno_repo = lspconfig.util.root_pattern('deno.json', 'import_map.json', 'deno.jsonc')(vim.fn.getcwd())
+        local is_in_ts_repo = lspconfig.util.root_pattern('tsconfig.json', 'jsconfig.json')(vim.fn.getcwd())
 
         if is_in_deno_repo and client then
           if client.name == 'ts_ls' then
+            client.stop()
+            return
+          end
+        end
+
+        if is_in_ts_repo and client then
+          if client.name == 'denols' then
             client.stop()
             return
           end
@@ -109,7 +117,9 @@ return {
           'typescriptreact',
         },
       },
-      denols = {},
+      denols = {
+        root_dir = vim.fs.dirname(vim.fs.find({ 'deno.json', 'deno.jsonc' }, { upward = true })[1]),
+      },
       cssls = {
         init_options = {
           provideFormatter = true,
