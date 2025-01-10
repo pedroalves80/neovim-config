@@ -33,7 +33,7 @@ return {
 
         local lspconfig = require 'lspconfig'
         local is_in_deno_repo = lspconfig.util.root_pattern('deno.json', 'import_map.json', 'deno.jsonc')(vim.fn.getcwd())
-        local is_in_ts_repo = lspconfig.util.root_pattern('tsconfig.json', 'jsconfig.json')(vim.fn.getcwd())
+        local is_in_ts_repo = lspconfig.util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json')(vim.fn.getcwd())
 
         if is_in_deno_repo and client then
           if client.name == 'ts_ls' then
@@ -44,8 +44,13 @@ return {
 
         if is_in_ts_repo and client then
           if client.name == 'denols' then
-            client.stop()
-            return
+            print 'Stopping denols'
+
+            local deno_client = vim.lsp.get_client_by_id(event.data.client_id)
+
+            if deno_client then
+              vim.lsp.stop_client(deno_client.id)
+            end
           end
         end
 
@@ -87,6 +92,7 @@ return {
       gopls = {},
       pyright = {},
       rust_analyzer = {},
+      html = {},
 
       lua_ls = {
         settings = {

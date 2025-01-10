@@ -16,16 +16,26 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local actions = require 'telescope.actions'
     require('telescope').setup {
 
       defaults = {
+        prompt_prefix = ' ',
         path_display = {
-          'filename_first',
+          'smart',
+        },
+        mappings = {
+          i = {
+            ['<Esc>'] = actions.close,
+          },
         },
       },
-      extensions = {
-        ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+      pickers = {
+        find_files = {
+          find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
+        },
+        git_status = {
+          path_display = { 'shorten' },
         },
       },
     }
