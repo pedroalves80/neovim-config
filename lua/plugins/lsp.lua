@@ -44,8 +44,6 @@ return {
 
         if is_in_ts_repo and client then
           if client.name == 'denols' then
-            print 'Stopping denols'
-
             local deno_client = vim.lsp.get_client_by_id(event.data.client_id)
 
             if deno_client then
@@ -104,17 +102,11 @@ return {
         },
       },
       jsonls = {},
-      angularls = {},
+      angularls = {
+        cmd = { 'ngserver', '--stdio' },
+        filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
+      },
       ts_ls = {
-        init_options = {
-          plugins = {
-            {
-              name = '@vue/typescript-plugin',
-              location = os.getenv 'APPDATA' .. '/npm/node_modules/@vue/typescript-plugin',
-              languages = { 'javascript', 'typescript', 'vue' },
-            },
-          },
-        },
         filetypes = {
           'javascript',
           'typescript',
@@ -133,9 +125,7 @@ return {
       },
       volar = {
         init_options = {
-          typescript = {
-            tsdk = os.getenv 'APPDATA' .. '/npm/node_modules/typescript/lib',
-          },
+          typescript = {},
         },
       },
       eslint = {},
@@ -150,10 +140,7 @@ return {
           },
         },
       },
-      jdtls = {
-        cmd = { os.getenv 'HOME' .. '/AppData/Local/nvim-data/mason/bin/jdtls' },
-        root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
-      },
+      jdtls = {},
       prettier = {},
       prettierd = {},
       tailwindcss = {},
@@ -167,11 +154,13 @@ return {
       'google-java-format', -- Used to format Java code
       'rustfmt', -- Used to format Rust code
       'sql-formatter', -- Used to format SQL code
-      'clang-format', -- Used to format Java code
+      --'clang-format', -- Used to format Java code
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
+      ensure_installed = ensure_installed,
+      automatic_installation = true,
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
