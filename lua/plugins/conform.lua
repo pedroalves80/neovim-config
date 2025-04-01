@@ -37,13 +37,11 @@ return {
       json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       markdown = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-      rust = { 'rustfmt' },
       go = { 'gofmt' },
       typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       angular = { 'prettierd', 'prettier', stop_after_first = true },
       vue = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       java = { 'google-java-format', 'clang-format' },
-      sql = { 'sql-formatter' },
     },
   },
 }
