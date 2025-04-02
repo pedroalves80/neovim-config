@@ -1,6 +1,6 @@
 return {
   'jonahgoldwastaken/copilot-status.nvim',
-  dependencies = { 'copilot.lua' },
+  dependencies = { 'copilot.vim' },
   lazy = true,
   event = 'InsertEnter',
 }
