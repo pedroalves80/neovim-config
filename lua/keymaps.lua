@@ -147,3 +147,5 @@ vim.keymap.set('n', '<leader>g', function()
 
   vim.fn.system('start chrome "https://www.google.com/search?q=' .. search .. '"')
 end, { desc = 'Google Search' })
+
+vim.keymap.set('n', '<leader>gc', ':CopilotChatToggle<CR>', { desc = 'Google Search in Firefox' })
