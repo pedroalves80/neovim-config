@@ -126,8 +126,11 @@ vim.keymap.set('n', '<leader>ft', function()
   end
 end, { desc = 'Set filetype' })
 
--- Restart Lsp
-vim.keymap.set('n', '<leader>rl', ':LspRestart<CR>', { desc = 'Restart LSP' })
+-- Toggle Relative line numbers
+vim.keymap.set('n', '<leader>rl', function()
+  vim.wo.relativenumber = not vim.wo.relativenumber
+  print('Relative line numbers ' .. (vim.wo.relativenumber and 'enabled' or 'disabled'))
+end, { desc = 'Toggle relative line numbers' })
 
 -- Resize windows
 vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', { silent = true })

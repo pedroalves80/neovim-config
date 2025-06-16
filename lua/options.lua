@@ -22,3 +22,5 @@ vim.wo.relativenumber = true
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
+vim.opt.swapfile = false
+vim.opt.fillchars:append ',eob: '
