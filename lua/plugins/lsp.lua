@@ -8,7 +8,8 @@ return {
 
     { 'j-hui/fidget.nvim', opts = {} },
 
-    'hrsh7th/cmp-nvim-lsp',
+    -- blink.cmp
+    'saghen/blink.cmp',
   },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -35,21 +36,16 @@ return {
         local is_in_deno_repo = lspconfig.util.root_pattern('deno.json', 'import_map.json', 'deno.jsonc')(vim.fn.getcwd())
         local is_in_ts_repo = lspconfig.util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json')(vim.fn.getcwd())
 
-        if is_in_deno_repo and client then
-          if client.name == 'ts_ls' then
-            client.stop()
-            return
-          end
+        -- Stop ts_ls in Deno repos
+        if is_in_deno_repo and client and client.name == 'ts_ls' then
+          client.stop()
+          return
         end
 
-        if is_in_ts_repo and client then
-          if client.name == 'denols' then
-            local deno_client = vim.lsp.get_client_by_id(event.data.client_id)
-
-            if deno_client then
-              vim.lsp.stop_client(deno_client.id)
-            end
-          end
+        -- Stop denols in TypeScript repos
+        if is_in_ts_repo and client and client.name == 'denols' then
+          client.stop()
+          return
         end
 
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
@@ -84,7 +80,7 @@ return {
     })
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+    capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities(capabilities))
 
     local servers = {
       gopls = {},
@@ -128,7 +124,9 @@ return {
           typescript = {},
         },
       },
-      eslint = {},
+      eslint = {
+        root_dir = require('lspconfig').util.root_pattern('nx.json', 'package.json', '.git'),
+      },
       intelephense = {
         settings = {
           intelephense = {

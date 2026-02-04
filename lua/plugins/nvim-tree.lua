@@ -11,6 +11,7 @@ return {
       git = {
         enable = true,
         ignore = false,
+        timeout = 2000,
       },
       view = {
         adaptive_size = true,
